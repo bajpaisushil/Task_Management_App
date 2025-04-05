@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './store';
+import { AppDispatch, RootState } from './store';
 import { checkAuth } from './store/authSlice';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -10,7 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { isAuthenticated, loading } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {

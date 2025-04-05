@@ -5,7 +5,6 @@ import { fetchTasks, clearTaskError } from '../store/taskSlice';
 import TaskList from '../components/TaskList';
 import TaskForm from '../components/TaskForm';
 import TaskFilter from '../components/TaskFilter';
-import { checkAuth } from '../store/authSlice';
 
 const Dashboard = () => {
   const dispatch = useDispatch<AppDispatch>();

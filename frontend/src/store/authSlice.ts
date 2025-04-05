@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { API_URL } from '../config';
-import { fetchTasks } from './taskSlice';
 
 interface User {
   id: number;
@@ -41,7 +40,7 @@ if (initialState.accessToken) {
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (credentials: { email: string; password: string }, { rejectWithValue, dispatch }) => {
+  async (credentials: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${API_URL}/auth/login`, credentials);
       
@@ -129,7 +128,7 @@ export const checkAuth = createAsyncThunk(
     
     try {
       setAuthHeader(accessToken)
-      const response = await axios.get(`${API_URL}/tasks`);
+      await axios.get(`${API_URL}/tasks`);
       return true;
     } catch (error: any) {
       if (error.response?.status === 401) {
