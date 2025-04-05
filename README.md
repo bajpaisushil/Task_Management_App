@@ -63,10 +63,10 @@ POSTGRES_DB=taskdb
 DATABASE_URL=postgresql://postgres:password@postgres:5432/taskdb
 JWT_SECRET=your_jwt_secret_key
 JWT_REFRESH_SECRET=your_refresh_token_secret
-PORT=3000
+PORT=5000
 
 # Frontend
-VITE_API_URL=http://localhost:3000/api
+VITE_API_URL=http://localhost:5000/api
 ```
 
 > **Important**: For production environments, use strong, unique passwords and secrets!
@@ -79,13 +79,6 @@ VITE_API_URL=http://localhost:3000/api
 docker --version
 docker-compose --version
 ```
-
-#### Configure Docker resources (recommended):
-
-- Allocate at least 4GB of RAM to Docker
-- Allocate at least 2 CPU cores
-
-You can configure these settings in Docker Desktop preferences.
 
 ### 4. Build and Start the Docker Services
 
@@ -110,36 +103,9 @@ docker-compose up -d
 ### 5. Verify Services
 
 - Frontend: http://localhost:5173
-- Backend API: http://localhost:3000/api
-- Swagger Documentation: http://localhost:3000/api-docs
+- Backend API: http://localhost:5000/api
+- Swagger Documentation: http://localhost:5000/api-docs
 
-### 6. Initial Database Setup
-
-The first time you run the application, you need to initialize the database schema:
-
-```bash
-# Connect to the running backend container
-docker-compose exec backend sh
-
-# Run Prisma migrations (inside the container)
-npx prisma migrate deploy
-
-# Optionally seed the database with initial data
-npx prisma db seed
-```
-
-### 7. Docker Commands Reference
-
-#### View logs from containers:
-```bash
-# All services
-docker-compose logs
-
-# Specific service
-docker-compose logs backend
-docker-compose logs frontend
-docker-compose logs postgres
-```
 
 #### Restart services:
 ```bash
@@ -169,42 +135,6 @@ docker-compose down -v
 docker-compose ps
 ```
 
-### 8. Accessing the Database
-
-To directly access the PostgreSQL database:
-
-```bash
-docker-compose exec postgres psql -U postgres -d taskdb
-```
-
-### 9. Troubleshooting Docker Setup
-
-#### Common Docker Issues:
-
-- **Services not starting:**
-  - Check logs: `docker-compose logs [service_name]`
-  - Verify that no other services are using the required ports
-
-- **Database connection issues:**
-  - Ensure the PostgreSQL service is running: `docker-compose ps`
-  - Verify the `DATABASE_URL` environment variable matches the PostgreSQL service configuration
-  - Check database logs: `docker-compose logs postgres`
-
-- **Port conflicts:**
-  - If ports are already in use, modify the port mappings in `docker-compose.yml`
-  - Common syntax: `host_port:container_port`
-
-- **Volume permissions:**
-  - Issues with file permissions can be resolved by checking the ownership of mounted volumes
-  - You may need to adjust file permissions: `chmod -R 777 ./data`
-
-- **Container not rebuilding after changes:**
-  - Force rebuild: `docker-compose up --build`
-
-- **Container restarts continuously:**
-  - Check logs to identify the cause: `docker-compose logs [service_name]`
-  - Verify environment variables and configuration files
-
 ## Local Development Setup
 
 ### Backend Setup:
@@ -224,7 +154,7 @@ Create a `.env` file with the following variables:
 DATABASE_URL=postgresql://postgres:password@localhost:5432/taskdb
 JWT_SECRET=your_jwt_secret_key
 JWT_REFRESH_SECRET=your_refresh_token_secret
-PORT=3000
+PORT=5000
 ```
 
 Run the development server:
@@ -246,7 +176,7 @@ npm install
 
 Create a `.env` file with the following variables:
 ```
-VITE_API_URL=http://localhost:3000/api
+VITE_API_URL=http://localhost:5000/api
 ```
 
 Run the development server:
@@ -286,7 +216,7 @@ All task endpoints require authentication via JWT token in the Authorization hea
 **DELETE /api/tasks/{id}**: Delete a task
 - Response: `{ "message": "Task deleted successfully" }`
 
-For detailed API documentation, visit the Swagger UI at http://localhost:3000/api-docs when the application is running.
+For detailed API documentation, visit the Swagger UI at http://localhost:5000/api-docs when the application is running.
 
 ## Project Structure
 
@@ -318,7 +248,7 @@ task-management-app/
 The application consists of three Docker services:
 
 - **frontend**: React application served on port 5173
-- **backend**: Express.js API running on port 3000
+- **backend**: Express.js API running on port 5000
 - **postgres**: PostgreSQL database service
 
 ## Development
